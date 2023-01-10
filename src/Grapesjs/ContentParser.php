@@ -2,19 +2,35 @@
 
 namespace Calima\LandingBuilder\Grapesjs;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
 
 class ContentParser {
     public function parse(string $content): string
     {
-        $content = $this->componentShortcodes($content);
-        return $content;
+        $content = $this->parseComponents($content);
+        $content = $this->parseLivewire($content);
+        // return $content;
+        return Blade::render($content);
     }
 
-    private function componentShortcodes(string $content): string
+    private function parseComponents(string $content): string
     {
-        $regex = '/\[(builder:[^\]]+)\]/';
-        $content = preg_replace_callback($regex, function ($matches) {
+        return $this->_componentShortcodes($content, 'builder', fn ($componentName, $variables) => view('components.' . $componentName, $variables)->render());
+    }
+
+    private function parseLivewire(string $content): string
+    {
+        return $this->_componentShortcodes($content, 'livewire', function ($componentName, $variables) {
+            // TODO: Add support for variables
+            return '<livewire:' . $componentName . ' />';
+        });
+    }
+
+    private function _componentShortcodes(string $content, string $prefix, $callback): string
+    {
+        $regex = '/\[(' . $prefix . ':[^\]]+)\]/';
+        $content = preg_replace_callback($regex, function ($matches) use ($prefix, $callback) {
             // shortcodes have the following format:
             // builder:component-name :variable1="value" :variable2.each="\App\Models\SomeModel::all()"
             $sharedVariables = [];
@@ -22,7 +38,7 @@ class ContentParser {
                 'variable' => null,
                 'value' => null,
             ];
-            $componentName = Str::before(Str::after($matches[1], 'builder:'), ' ');
+            $componentName = Str::before(Str::after($matches[1], $prefix . ':'), ' ');
             $variables = html_entity_decode(Str::after($matches[1], ' '));
 
             $modifiers = [
@@ -58,7 +74,7 @@ class ContentParser {
             }
 
             if (is_null($iterable['value'])) {
-                $content = view('components.' . $componentName, $sharedVariables)->render();
+                $content = $callback($componentName, $sharedVariables);
             } else {
                 $items = $iterable['value'];
                 if (! is_iterable($items)) {
@@ -67,9 +83,9 @@ class ContentParser {
 
                 $content = '';
                 foreach ($items as $item) {
-                    $content .= view('components.' . $componentName, array_merge([
+                    $content .= $callback($componentName, array_merge([
                         $iterable['variable'] => $item,
-                    ], $sharedVariables))->render();
+                    ], $sharedVariables));
                 }
             }
             return $content;
