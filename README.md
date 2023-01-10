@@ -1,9 +1,9 @@
 # This is my package landing-builder
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ismaelcalimadev/landing-builder.svg?style=flat-square)](https://packagist.org/packages/ismaelcalimadev/landing-builder)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/ismaelcalimadev/landing-builder/run-tests?label=tests)](https://github.com/ismaelcalimadev/landing-builder/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/ismaelcalimadev/landing-builder/Check%20&%20fix%20styling?label=code%20style)](https://github.com/ismaelcalimadev/landing-builder/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/ismaelcalimadev/landing-builder.svg?style=flat-square)](https://packagist.org/packages/ismaelcalimadev/landing-builder)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/calima-solutions/landing-builder.svg?style=flat-square)](https://packagist.org/packages/calima-solutions/landing-builder)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/calima-solutions/landing-builder/run-tests?label=tests)](https://github.com/calima-solutions/landing-builder/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/calima-solutions/landing-builder/Check%20&%20fix%20styling?label=code%20style)](https://github.com/calima-solutions/landing-builder/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/calima-solutions/landing-builder.svg?style=flat-square)](https://packagist.org/packages/calima-solutions/landing-builder)
 
 
 
@@ -14,7 +14,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via composer:
 
 ```bash
-composer require ismaelcalimadev/landing-builder
+composer require calima-solutions/landing-builder
 ```
 
 You can publish and run the migrations with:
@@ -70,7 +70,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [ismaelCalimaDev](https://github.com/ismaelCalimaDev)
+- [calima-solutions](https://github.com/calima-solutions)
 - [All Contributors](../../contributors)
 
 ## License

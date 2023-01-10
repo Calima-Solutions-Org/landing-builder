@@ -1,16 +1,24 @@
 {
-    "name": "ismaelcalimadev/landing-builder",
-    "description": "This is my package landing-builder",
+    "name": "calima-solutions/landing-builder",
+    "description": "Filament page builder with GrapesJS",
     "keywords": [
-        "ismaelCalimaDev",
+        "calima-solutions",
         "laravel",
+        "filament",
+        "builder",
+        "grapesjs",
         "landing-builder"
     ],
-    "homepage": "https://github.com/ismaelcalimadev/landing-builder",
+    "homepage": "https://github.com/calima-solutions/landing-builder",
     "license": "MIT",
     "authors": [
         {
-            "name": "ismaelCalimaDev",
+            "name": "Raúl López",
+            "email": "hi@raullg.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Ismael Santiago",
             "email": "santiago@calimasolutions.com",
             "role": "Developer"
         }
