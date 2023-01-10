@@ -10,20 +10,55 @@ class ContentParser {
     {
         $content = $this->parseComponents($content);
         $content = $this->parseLivewire($content);
-        // return $content;
+
+        // remove body tags
+        $content = Str::replaceFirst('<body>', '', $content);
+        $content = Str::replaceLast('</body>', '', $content);
+
         return Blade::render($content);
     }
 
     private function parseComponents(string $content): string
     {
-        return $this->_componentShortcodes($content, 'builder', fn ($componentName, $variables) => view('components.' . $componentName, $variables)->render());
+        return $this->_componentShortcodes($content, 'builder', function ($componentName, $variables) {
+            $html = '';
+            $variables = [
+                'component' => $componentName,
+                'variables' => ['test' => 1],
+            ];
+            if (!empty($variables)) {
+                $html = "@php";
+                foreach ($variables as $name => $value) {
+                    $html .= "\n\t\${$name} = " . var_export($value, true) . ";";
+                }
+                $html .= "\n\t@endphp";
+            }
+            $html .= "\n\t<x-" . $componentName;
+            foreach ($variables as $name => $value) {
+                $html .= " :{$name}=\"\${$name}\"";
+            }
+            $html .= ' />';
+            return $html;
+        });
     }
 
     private function parseLivewire(string $content): string
     {
         return $this->_componentShortcodes($content, 'livewire', function ($componentName, $variables) {
-            // TODO: Add support for variables
-            return '<livewire:' . $componentName . ' />';
+            $html = '';
+            if (!empty($variables)) {
+                $html = "@php";
+                foreach ($variables as $name => $value) {
+                    $html .= "\n\t\${$name} = " . var_export($value, true) . ";";
+                }
+                $html .= "\n\t@endphp";
+            }
+            $html .= "\n\t<livewire:" . $componentName;
+            foreach ($variables as $name => $value) {
+                $html .= " :{$name}=\"\${$name}\"";
+            }
+            $html .= ' />';
+            return $html;
         });
     }
 
