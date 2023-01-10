@@ -21,14 +21,6 @@ class LandingBuilderServiceProvider extends PluginServiceProvider
         // CustomWidget::class,
     ];
 
-    protected array $styles = [
-        'plugin-landing-builder' => __DIR__.'/../resources/dist/landing-builder.css',
-    ];
-
-    protected array $scripts = [
-        'plugin-landing-builder' => __DIR__.'/../resources/dist/landing-builder.js',
-    ];
-
     // protected array $beforeCoreScripts = [
     //     'plugin-landing-builder' => __DIR__ . '/../resources/dist/landing-builder.js',
     // ];
@@ -36,6 +28,25 @@ class LandingBuilderServiceProvider extends PluginServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name);
-        $package->hasRoutes(__DIR__ . '/../routes/web.php');
+        $package->hasRoutes('/../routes/web');
+        $package->hasViews('calima-builder');
+        $package->hasMigrations('2022_09_18_150122_create_builder_files_table');
+        $package->hasConfigFile('pagebuilder');
+    }
+
+    protected function getStyles(): array
+    {
+        return [
+            'grapesjs' => __DIR__.'/../resources/dist/css/grapes.min.css',
+            url('/css/grapesjseditor.css'),
+        ];
+    }
+
+    protected function getScripts(): array
+    {
+        return [
+            'grapesjs' => __DIR__.'/../resources/dist/js/grapes.min.js',
+            url('/js/grapesjseditor.js'),
+        ];
     }
 }
